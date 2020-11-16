@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #board {
+        display: grid;
+        grid-template-columns: repeat(8, 60px);
+        grid-template-rows: repeat(8, 60px);
+        height: 480px;
+        width: 480px;
+      }
+
+      .dark,
+      .light {
+        font-size: 240%;
+        text-align: center;
+      }
+
+      .dark {
+        background-color: rgb(181, 136, 99);
+      }
+
+      .light {
+        background-color: rgb(240, 217, 181);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="board"></div>
+    <button onclick="move(-1,0)">Opp</button><br />
+    <button onclick="move(0,-1)">Venstre</button>
+    <button onclick="move(0,1)">Høyre</button><br />
+    <button onclick="move(1,0)">Ned</button>
+
+    <script>
+      // model
+      var blackPieceRow = 0;
+      var blackPieceCol = 0;
+      var whitePieceRow = 0;
+      var whitePieceCol = 2;
+
+      // controller
+      function move(moveRow, moveCol) {
+        pieceRow += moveRow;
+        pieceCol += moveCol;
+        updateView();
+      }
+
+      // view
+      function getCellHtml(row, col, color){
+          var isPiece = pieceRow == row && pieceCol == col;
+          var content = isPiece ? '🔴' : '';
+          return `<div class="${color}">${getCellContent(row, col)}</div>`;
+      }
+
+      function getRowHtml(row, color1, color2) {
+        return `
+                <div class="${color1}">${getCellContent(row, 0)}</div>
+                <div class="${color2}">${getCellContent(row, 1)}</div>
+                <div class="${color1}">${getCellContent(row, 2)}</div>
+                <div class="${color2}">${getCellContent(row, 3)}</div>
+                <div class="${color1}">${getCellContent(row, 4)}</div>
+                <div class="${color2}">${getCellContent(row, 5)}</div>
+                <div class="${color1}">${getCellContent(row, 6)}</div>
+                <div class="${color2}">${getCellContent(row, 7)}</div>
+            `;
+      }
+
+      updateView();
+      function updateView() {
+        document.getElementById("board").innerHTML = `
+                ${getRowHtml(0, "light", "dark")}
+                ${getRowHtml(1, "dark", "light")}
+                ${getRowHtml(2, "light", "dark")}
+                ${getRowHtml(3, "dark", "light")}
+                ${getRowHtml(4, "light", "dark")}
+                ${getRowHtml(5, "dark", "light")}
+                ${getRowHtml(6, "light", "dark")}
+                ${getRowHtml(7, "dark", "light")}
+            `;
+      }
+
+      function getCellContent(row, col) {
+        return pieceRow == row && pieceCol == col ? "⬤" : "";
+      }
+    </script>
+  </body>
+</html>

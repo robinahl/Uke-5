@@ -1,0 +1,59 @@
+<!DOCTYPE <!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <button onclick="controller1()">GetDucked</button>
+        <div id="app"></div>
+
+
+        <script>
+    // model
+            let liste = [];
+            let listeHtml;
+            test();
+
+            function test(){
+                fetch('enfil.json')
+                .then(response => response.json/())
+                .then(data => {
+                    liste = data;
+                    console.log(liste, " this is liste")
+
+                });
+            }
+
+    //  view
+            function showView(){
+                let html = "";
+
+                    html += `
+
+                    `;
+
+                document.getElementById("app").innerHTML = html;
+
+            }
+    
+    // controller
+            function controller1(){
+                listeHtml = "";
+
+            for(let i = 0; i < mydata.length; i++)
+                {
+
+                }
+            }
+
+        </script>
+    </body>
+</html>
+
+<!-- // json = objekt ???? -->
