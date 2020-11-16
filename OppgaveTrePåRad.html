@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Tre på rad</title>
+    <style type="text/css">
+        div {
+            user-select: none;
+        }
+
+            div.cell {
+                background-color: lightgray;
+                width: 100px;
+                height: 100px;
+                float: left;
+                margin: 2px;
+                font-size: 500%;
+                font-family: helvetica;
+                text-align: center;
+                vertical-align: middle;
+            }
+
+            div.first {
+                clear: left;
+            }
+
+            div.coloro {
+                color: blue;
+            }
+
+            div.colorx {
+                color: green;
+            }
+    </style>
+</head>
+<body>
+    <div id="board"></div>
+
+    <script type="text/javascript">
+        // hjelpevariabler for view og controller
+        let boardDiv = document.getElementById('board');
+
+        // model
+        let board = ['', '', '', '', '', '', '', '', ''];
+
+        // view
+        show();
+        function show() {
+            let html = '';
+            for (let i = 0; i < 9; i++) {
+                let first = i % 3 == 0 ? 'first' : '';
+                html += `<div onclick="setX(${i})" class="cell color${board[i]} ${first}">${board[i]}</div>`;
+            }
+            boardDiv.innerHTML = html;
+        }
+
+        // controller
+        function setX(index) {
+            console.log(index);
+            if (board[index] === '') {
+                board[index] = 'x';
+                setO();
+            }
+            show();
+        }
+
+        function setO() {
+            let blankIndexes = Array.from(board.keys()).filter(i => board[i] === '');
+            if (blankIndexes.length === 0) return;
+            let random = Math.floor(Math.random() * blankIndexes.length);
+            let blankIndex = blankIndexes[random];
+            board[blankIndex] = 'o';
+            show();
+        }
+    </script>
+</body>
+</html>

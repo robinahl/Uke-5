@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Sliding puzzle</title>
+    <style>
+        p.feilmelding {
+            color: red;
+        }
+
+        div.trekkteller {
+            clear: left;
+        }
+
+        div.flis {
+            color: blue;
+            background: lightblue;
+            padding: 18px;
+            margin: 10px;
+            border: solid green 7px;
+            width: 30px;
+            height: 30px;
+            float: left;
+        }
+
+        div.førstPåLinje {
+            clear: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="numbers">
+    </div>
+
+
+    <script>
+        // Model
+        let count = 0;
+        let numbers = [3, 5, 6, 8, 1, 0, 2, 4, 7];
+
+        // View
+        show();
+        function show() {
+            let html = '';
+            for (let i = 0; i < numbers.length; i++) {
+                let number = numbers[i];
+                let isBlank = number === 0;
+                let numberText = isBlank ? '' : number;
+
+                let firstInLine = i % 3 == 0 ? 'førstPåLinje' : '';
+
+                html +=
+                    `<div class="flis ${firstInLine}"
+                                              onclick="clickedNumber(${i});"
+                                              >${numberText}</div>`;
+            }
+            html += `<div style="clear: both;">Antall trekk: ${count}</div>`;
+            document.getElementById('numbers').innerHTML = html;
+        }
+
+        function clickedNumber(index) {
+            let blankIndex = findBlankIndex(index);
+            if (blankIndex == null) return;
+            count++;
+            numbers[blankIndex] = numbers[index];
+            numbers[index] = 0;
+            show();
+        }
+
+        function findBlankIndex(index) {
+            for (let delta of [-3, -1, 1, 3]) {
+                let newIndex = index + delta;
+                if (newIndex < 0 || newIndex >= numbers.length) continue;
+                if (numbers[newIndex] === 0) {
+                    return newIndex;
+                }
+            }
+            return null;
+        }
+    </script>
+</body>
+
+</html>
